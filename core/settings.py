@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-5t-rowu_ta5ekk%_-37jz)j3_%k^6&#rx0zml49f4+oaalb!5b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['51.20.98.208', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -107,6 +107,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Media files (User uploads like images)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media/'
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 JAZZMIN_SETTINGS = {
     "site_title": "Lake Victoria Logistics Admin",
