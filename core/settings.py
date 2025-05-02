@@ -132,11 +132,10 @@ JAZZMIN_SETTINGS = {
 
     "search_model": ["auth.User", "website.Customer"],  # Update this as per your models
 
-    "topmenu_links": [
-        {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
-        {"app": "auth"},  # Adds auth section directly in top navbar
-        {"app": "website"},  # Add your custom app
-    ],
+"topmenu_links": [
+    {"name": "Home", "app": "home"},  # 👈 This adds Home with a dropdown
+    {"app": "auth"},
+],
 
     "usermenu_links": [
         {"name": "Support", "url": "https://lakevictorialogistics.com/contact", "new_window": True}
@@ -153,16 +152,14 @@ JAZZMIN_SETTINGS = {
         "auth": "fas fa-users-cog",
         "auth.user": "fas fa-user",
         "auth.Group": "fas fa-users",
-        "website.Customer": "fas fa-briefcase",
-        "website.HomeSection": "fa-solid fa-house",                # Home
-        "website.AboutUsSection": "fa-solid fa-address-card",      # About Us
-        "website.ServicesSection": "fa-solid fa-briefcase",        # Services
-        "website.InfrastructureSection": "fa-solid fa-industry",   # Infrastructure
-        "website.EnvironmentSection": "fa-solid fa-leaf",          # Environment
-        "website.CustomersSection": "fa-solid fa-users",           # Customers
-        "website.MediaSection": "fa-solid fa-photo-film",          # Media & Events
-        "website.ImageGallery": "fa-solid fa-image",               # Image Gallery
-        "website.ContactUsSection": "fa-solid fa-envelope", 
+    # Home App Models
+    "home": "fas fa-home",  # App-level icon for Home
+    "home.herosection": "fas fa-image",  # Hero Section
+    "home.service": "fas fa-boxes",  # Services
+    "home.whychooseusreason": "fas fa-check-circle",  # Why Choose Us
+    "home.infrastructuresection": "fas fa-industry",  # Infrastructure
+    "home.clientpage": "fas fa-handshake",  # Client Page
+    "home.clientlogo": "fas fa-building",  # Client Logo
     },
     "default_icon_parents": "fas fa-chevron-circle-right",
     "default_icon_children": "fas fa-circle",
