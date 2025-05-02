@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import hero_section_view
+from .views import home_page_view
 
 urlpatterns = [
-    path('api/hero-section/', hero_section_view, name='hero-section'),
+    path('api/home_page/', home_page_view, name='home_page_view'),
 ]
