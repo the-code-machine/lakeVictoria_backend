@@ -19,7 +19,7 @@ class ServiceCategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ServiceCategory
-        fields = ['slug', 'title', 'description', 'image', 'link', 'content_items']
+        fields = [ 'title', 'description', 'image',  'content_items']
 
 class ServiceMainPageSerializer(serializers.ModelSerializer):
     categories = ServiceCategorySerializer(many=True, read_only=True)
@@ -40,7 +40,7 @@ class LogisticServiceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = LogisticService
-        fields = ['slug', 'title', 'description', 'image', 'details']
+        fields = [ 'title', 'description', 'image', 'details']
 
 class LogisticServicePageSerializer(serializers.ModelSerializer):
     services = LogisticServiceSerializer(many=True, read_only=True)
@@ -80,7 +80,7 @@ class ServiceAreaSectionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ServiceAreaSection
-        fields = ['slug', 'title', 'description', 'image', 'details']
+        fields = [ 'title', 'description', 'image', 'details']
 
 class ServiceAreaPageSerializer(serializers.ModelSerializer):
     coverage_map = CoverageMapSerializer(read_only=True)
@@ -102,7 +102,7 @@ class StorageServiceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = StorageService
-        fields = ['slug', 'title', 'description', 'image', 'details']
+        fields = [ 'title', 'description', 'image', 'details']
 
 class StorageServicePageSerializer(serializers.ModelSerializer):
     services = StorageServiceSerializer(many=True, read_only=True)
