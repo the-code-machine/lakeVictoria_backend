@@ -13,11 +13,9 @@ class EnvironmentalPage(models.Model):
 
 class EnvironmentalInitiative(models.Model):
     page = models.ForeignKey(EnvironmentalPage, on_delete=models.CASCADE, related_name='initiatives')
-    slug = models.SlugField(max_length=100, unique=True)
     title = models.CharField(max_length=255)
     description = models.TextField()
     image = models.ImageField(upload_to='environment/initiatives/')
-    link = models.URLField()
     stats = models.CharField(max_length=255)
 
     def __str__(self):
@@ -46,7 +44,6 @@ class OilManagementPage(models.Model):
 
 class OilSystem(models.Model):
     page = models.ForeignKey(OilManagementPage, on_delete=models.CASCADE, related_name='systems')
-    slug = models.SlugField(max_length=100, unique=True)
     title = models.CharField(max_length=255)
     description = models.TextField()
     efficiency = models.CharField(max_length=255)
