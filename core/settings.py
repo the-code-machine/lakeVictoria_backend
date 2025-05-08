@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     "our_customer",
     "gallery",
     "environment",
+    'media_events',
     'corsheaders',
     "nested_admin",
     'rest_framework',
@@ -187,6 +188,11 @@ JAZZMIN_SETTINGS = {
  "environment.environmentalpage": "fas fa-leaf",
  "environment.carbonfootprintpage": "fas fa-leaf",
  "environment.oilmanagementpage": "fas fa-oil-can",
+  "media_events.mediaeventspage": "fas fa-bullhorn",               
+  "media_events.mediaarticle": "fas fa-newspaper",          
+  "media_events.event": "fas fa-calendar-alt",             
+
+
     },
     "default_icon_parents": "fas fa-chevron-circle-right",
     "default_icon_children": "fas fa-circle",
