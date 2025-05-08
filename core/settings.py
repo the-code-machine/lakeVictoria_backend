@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     "gallery",
     "environment",
     'media_events',
+    'infrastructure',
     'corsheaders',
     "nested_admin",
     'rest_framework',
@@ -140,11 +141,6 @@ JAZZMIN_SETTINGS = {
 
     "search_model": ["auth.User", "website.Customer"],  # Update this as per your models
 
-"topmenu_links": [
-    {"name": "Home", "app": "home"},  # 👈 This adds Home with a dropdown
-    {"app": "auth"},
-],
-
     "usermenu_links": [
         {"name": "Support", "url": "https://lakevictorialogistics.com/contact", "new_window": True}
     ],
@@ -192,6 +188,12 @@ JAZZMIN_SETTINGS = {
   "media_events.mediaarticle": "fas fa-newspaper",          
   "media_events.event": "fas fa-calendar-alt",             
 
+  "infrastructure.automationpage": "fas fa-robot",               
+  "infrastructure.firepage": "fas fa-fire-extinguisher",        
+  "infrastructure.powerpage": "fas fa-bolt",                    
+  "infrastructure.storagepage": "fas fa-oil-can",               
+  "infrastructure.truckloadingpage": "fas fa-truck-loading",    
+  "infrastructure.vesselpage": "fas fa-ship"      
 
     },
     "default_icon_parents": "fas fa-chevron-circle-right",
