@@ -168,6 +168,7 @@ class CompanyValue(models.Model):
 
 
 # --- INVESTMENTS ---
+# --- INVESTMENTS (Refactored like Environment) ---
 class InvestmentPage(models.Model):
     hero_title = models.CharField(max_length=255)
     hero_description = models.TextField()
@@ -190,24 +191,8 @@ class InvestmentBlock(models.Model):
     def __str__(self):
         return f"{self.get_block_type_display()} - {self.title}"
 
-class InvestmentArea(models.Model):
-    page = models.ForeignKey(InvestmentPage, on_delete=models.CASCADE, related_name='investment_areas')
-    title = models.CharField(max_length=100)
-    description = models.TextField()
-
-    def __str__(self):
-        return self.title
-
-class InvestorInfo(models.Model):
-    page = models.OneToOneField(InvestmentPage, on_delete=models.CASCADE, related_name='investor_info')
-    title = models.CharField(max_length=255)
-    description = models.TextField()
-
-    def __str__(self):
-        return self.title
-
-class InvestorInfoPoint(models.Model):
-    info = models.ForeignKey(InvestorInfo, on_delete=models.CASCADE, related_name='points')
+class InvestmentBlockPoint(models.Model):
+    block = models.ForeignKey(InvestmentBlock, on_delete=models.CASCADE, related_name="points")
     text = models.CharField(max_length=255)
 
     def __str__(self):

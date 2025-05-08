@@ -31,6 +31,9 @@ def home_combined_view(request):
         if (safety := SafetyPolicyPage.objects.first()):
             data["safety_policies"] = SafetyPolicyPageSerializer(safety).data
 
+        if (investment := InvestmentPage.objects.first()):
+            data["investment"] = InvestmentPageSerializer(investment).data
+
         return Response(data, status=status.HTTP_200_OK)
 
     except Exception as e:

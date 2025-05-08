@@ -101,28 +101,20 @@ class VisionMissionPageAdmin(nested_admin.NestedModelAdmin):
         return not VisionMissionPage.objects.exists()
 
 
-# ---------- INVESTMENT ----------
-class InvestorInfoPointInline(nested_admin.NestedTabularInline):
-    model = InvestorInfoPoint
+# ---------- INVESTMENT (Updated like ENVIRONMENT) ----------
+class InvestmentBlockPointInline(nested_admin.NestedTabularInline):
+    model = InvestmentBlockPoint
     extra = 1
 
-class InvestorInfoInline(nested_admin.NestedStackedInline):
-    model = InvestorInfo
-    inlines = [InvestorInfoPointInline]
-    extra = 0
-    can_delete = False
-
-class InvestmentBlockInline(nested_admin.NestedTabularInline):
+class InvestmentBlockInline(nested_admin.NestedStackedInline):
     model = InvestmentBlock
+    inlines = [InvestmentBlockPointInline]
     extra = 1
 
-class InvestmentAreaInline(nested_admin.NestedTabularInline):
-    model = InvestmentArea
-    extra = 1
 
 @admin.register(InvestmentPage)
 class InvestmentPageAdmin(nested_admin.NestedModelAdmin):
-    inlines = [InvestmentBlockInline, InvestmentAreaInline, InvestorInfoInline]
+    inlines = [InvestmentBlockInline]
 
     def has_add_permission(self, request):
         return not InvestmentPage.objects.exists()

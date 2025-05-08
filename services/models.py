@@ -12,11 +12,9 @@ class ServiceMainPage(models.Model):
 
 class ServiceCategory(models.Model):
     page = models.ForeignKey(ServiceMainPage, on_delete=models.CASCADE, related_name="categories")
-    slug = models.SlugField(unique=True, max_length=100)  # corresponds to `id` like 'logistic-service'
     title = models.CharField(max_length=255)
     description = models.TextField()
     image = models.ImageField(upload_to="services/")
-    link = models.URLField(max_length=255)
 
     def __str__(self):
         return self.title
@@ -43,7 +41,6 @@ class LogisticServicePage(models.Model):
 
 class LogisticService(models.Model):
     page = models.ForeignKey(LogisticServicePage, on_delete=models.CASCADE, related_name='services')
-    slug = models.SlugField(max_length=100, unique=True)  # like "bulk-transportation"
     title = models.CharField(max_length=255)
     description = models.TextField()
     image = models.ImageField(upload_to='logistics/')
@@ -102,7 +99,6 @@ class CountryLocation(models.Model):
 # --- SERVICE AREA DETAILS ---
 class ServiceAreaSection(models.Model):
     page = models.ForeignKey(ServiceAreaPage, on_delete=models.CASCADE, related_name='sections')
-    slug = models.SlugField(unique=True)
     title = models.CharField(max_length=255)
     description = models.TextField()
     image = models.ImageField(upload_to='service-area/')
@@ -131,7 +127,6 @@ class StorageServicePage(models.Model):
 
 class StorageService(models.Model):
     page = models.ForeignKey(StorageServicePage, on_delete=models.CASCADE, related_name='services')
-    slug = models.SlugField(max_length=100, unique=True)  # e.g. terminal-storage
     title = models.CharField(max_length=255)
     description = models.TextField()
     image = models.ImageField(upload_to='storage/services/')

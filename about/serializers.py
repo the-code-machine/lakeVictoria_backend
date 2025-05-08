@@ -142,3 +142,23 @@ class SafetyPolicyPageSerializer(serializers.ModelSerializer):
     class Meta:
         model = SafetyPolicyPage
         fields = ['hero_title', 'hero_description', 'intro', 'policies']
+
+# --- Investment (Refactored like Environment) ---
+class InvestmentBlockPointSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = InvestmentBlockPoint
+        fields = ['text']
+
+class InvestmentBlockSerializer(serializers.ModelSerializer):
+    points = InvestmentBlockPointSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = InvestmentBlock
+        fields = '__all__'
+
+class InvestmentPageSerializer(serializers.ModelSerializer):
+    blocks = InvestmentBlockSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = InvestmentPage
+        fields = ['hero_title', 'hero_description', 'intro', 'blocks', ]
