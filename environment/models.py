@@ -37,7 +37,8 @@ class OilManagementPage(models.Model):
     description = models.TextField()
     intro_title = models.CharField(max_length=255)
     intro_description = models.TextField()
-    image = models.ImageField(upload_to='environment/oil/')
+    image = models.ImageField(upload_to='environment/carbon/')
+    volume_shipped = models.PositiveIntegerField(blank=True, null=True) 
 
     def __str__(self):
         return "Oil Management Page"
