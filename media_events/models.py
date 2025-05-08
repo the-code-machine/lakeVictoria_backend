@@ -25,6 +25,7 @@ class MediaArticle(models.Model):
     date = models.DateField()
     summary = models.TextField()
     image = models.ImageField(upload_to='media_events/articles/')
+    link = models.URLField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return self.title

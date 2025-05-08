@@ -19,7 +19,7 @@ class MediaEventsPageSerializer(serializers.ModelSerializer):
 class MediaArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = MediaArticle
-        fields = ['title', 'publication', 'date', 'summary', 'image']
+        fields = ['title', 'publication', 'date', 'summary', 'image','link']
 
 class EventImageSerializer(serializers.ModelSerializer):
     class Meta:
