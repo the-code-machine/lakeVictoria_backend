@@ -3,5 +3,5 @@ from .views import ContactMessageCreateView, CompanyContactInfoView
 
 urlpatterns = [
     path('', ContactMessageCreateView.as_view(), name='contact-submit'),
-    path('/info', CompanyContactInfoView.as_view(), name='contact-info'),
+    path('info', CompanyContactInfoView.as_view(), name='contact-info'),
 ]
