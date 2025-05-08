@@ -1,63 +1,106 @@
+# infrastructure/admin.py
 import nested_admin
 from django.contrib import admin
 from .models import *
 
-# ------------------------ Automation ------------------------
-class AutomationSystemInline(nested_admin.NestedTabularInline):
+# --- Generic Inlines for Text Blocks ---
+class AutomationBenefitInline(nested_admin.NestedTabularInline):
+    model = AutomationBenefit
+    extra = 1
+
+class AutomationSystemFeatureInline(nested_admin.NestedTabularInline):
+    model = AutomationSystemFeature
+    extra = 1
+
+class FireOverviewItemInline(nested_admin.NestedTabularInline):
+    model = FireOverviewItem
+    extra = 1
+
+class FireSystemFeatureInline(nested_admin.NestedTabularInline):
+    model = FireSystemFeature
+    extra = 1
+
+class FireTrainingItemInline(nested_admin.NestedTabularInline):
+    model = FireTrainingItem
+    extra = 1
+
+class PowerDistributionFeatureInline(nested_admin.NestedTabularInline):
+    model = PowerDistributionFeature
+    extra = 1
+
+class StorageTankFeatureInline(nested_admin.NestedTabularInline):
+    model = StorageTankFeature
+    extra = 1
+
+class TruckLoadingSafetyPointInline(nested_admin.NestedTabularInline):
+    model = TruckLoadingSafetyPoint
+    extra = 1
+
+class TruckLoadingEfficiencyPointInline(nested_admin.NestedTabularInline):
+    model = TruckLoadingEfficiencyPoint
+    extra = 1
+
+class VesselOverviewItemInline(nested_admin.NestedTabularInline):
+    model = VesselOverviewItem
+    extra = 1
+
+class VesselCrewStatInline(nested_admin.NestedTabularInline):
+    model = VesselCrewStat
+    extra = 1
+
+# --- Automation Admin ---
+class AutomationSystemInline(nested_admin.NestedStackedInline):
     model = AutomationSystem
+    inlines = [AutomationSystemFeatureInline]
     extra = 1
 
 @admin.register(AutomationPage)
 class AutomationPageAdmin(nested_admin.NestedModelAdmin):
-    inlines = [AutomationSystemInline]
-    list_display = ['title']
+    inlines = [AutomationBenefitInline, AutomationSystemInline]
 
-
-# ------------------------ Fire ------------------------
-class FireSystemInline(nested_admin.NestedTabularInline):
+# --- Fire Admin ---
+class FireSystemInline(nested_admin.NestedStackedInline):
     model = FireSystem
+    inlines = [FireSystemFeatureInline]
     extra = 1
+
+class FireTrainingInline(nested_admin.NestedStackedInline):
+    model = FireTraining
+    inlines = [FireTrainingItemInline]
+    max_num = 1
+    can_delete = False
 
 class AutoModeStepInline(nested_admin.NestedTabularInline):
     model = AutoModeStep
     extra = 1
 
-class FireTrainingInline(nested_admin.NestedStackedInline):
-    model = FireTraining
-    can_delete = False
-    max_num = 1
-    extra = 0
-
 @admin.register(FirePage)
 class FirePageAdmin(nested_admin.NestedModelAdmin):
-    inlines = [FireSystemInline, AutoModeStepInline, FireTrainingInline]
-    list_display = ['title']
+    inlines = [FireOverviewItemInline, FireSystemInline, AutoModeStepInline, FireTrainingInline]
 
-
-# ------------------------ Power ------------------------
+# --- Power Admin ---
 class PowerSystemInline(nested_admin.NestedTabularInline):
     model = PowerSystem
     extra = 1
+
+class PowerDistributionInline(nested_admin.NestedStackedInline):
+    model = PowerDistribution
+    inlines = [PowerDistributionFeatureInline]
+    max_num = 1
+    can_delete = False
 
 class PowerMaintenanceStepInline(nested_admin.NestedTabularInline):
     model = PowerMaintenanceStep
     extra = 1
 
-class PowerDistributionInline(nested_admin.NestedStackedInline):
-    model = PowerDistribution
-    can_delete = False
-    max_num = 1
-    extra = 0
-
 @admin.register(PowerPage)
 class PowerPageAdmin(nested_admin.NestedModelAdmin):
-    inlines = [PowerSystemInline, PowerMaintenanceStepInline, PowerDistributionInline]
-    list_display = ['title']
+    inlines = [PowerSystemInline, PowerDistributionInline, PowerMaintenanceStepInline]
 
-
-# ------------------------ Storage ------------------------
-class StorageTankInline(nested_admin.NestedTabularInline):
+# --- Storage Admin ---
+class StorageTankInline(nested_admin.NestedStackedInline):
     model = StorageTank
+    inlines = [StorageTankFeatureInline]
     extra = 1
 
 class StorageSafetyBlockInline(nested_admin.NestedTabularInline):
@@ -67,10 +110,8 @@ class StorageSafetyBlockInline(nested_admin.NestedTabularInline):
 @admin.register(StoragePage)
 class StoragePageAdmin(nested_admin.NestedModelAdmin):
     inlines = [StorageTankInline, StorageSafetyBlockInline]
-    list_display = ['title']
 
-
-# ------------------------ Truck Loading ------------------------
+# --- Truck Loading Admin ---
 class LoadingBayInline(nested_admin.NestedTabularInline):
     model = LoadingBay
     extra = 1
@@ -81,17 +122,15 @@ class LoadingProcessStepInline(nested_admin.NestedTabularInline):
 
 class TruckLoadingSafetyInline(nested_admin.NestedStackedInline):
     model = TruckLoadingSafety
-    can_delete = False
+    inlines = [TruckLoadingSafetyPointInline, TruckLoadingEfficiencyPointInline]
     max_num = 1
-    extra = 0
+    can_delete = False
 
 @admin.register(TruckLoadingPage)
 class TruckLoadingPageAdmin(nested_admin.NestedModelAdmin):
     inlines = [LoadingBayInline, LoadingProcessStepInline, TruckLoadingSafetyInline]
-    list_display = ['title']
 
-
-# ------------------------ Vessel ------------------------
+# --- Vessel Admin ---
 class VesselFeatureInline(nested_admin.NestedTabularInline):
     model = VesselFeature
     extra = 1
@@ -100,18 +139,12 @@ class VesselSpecInline(nested_admin.NestedTabularInline):
     model = VesselSpec
     extra = 1
 
-class VesselCrewStatInline(nested_admin.NestedTabularInline):
-    model = VesselCrewStat
-    extra = 1
-
 class VesselCrewInline(nested_admin.NestedStackedInline):
     model = VesselCrew
-    extra = 0
-    can_delete = False
-    max_num = 1
     inlines = [VesselCrewStatInline]
+    max_num = 1
+    can_delete = False
 
 @admin.register(VesselPage)
 class VesselPageAdmin(nested_admin.NestedModelAdmin):
-    inlines = [VesselFeatureInline, VesselSpecInline, VesselCrewInline]
-    list_display = ['title']
+    inlines = [VesselOverviewItemInline, VesselFeatureInline, VesselSpecInline, VesselCrewInline]

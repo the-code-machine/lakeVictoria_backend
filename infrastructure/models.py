@@ -1,7 +1,14 @@
+# infrastructure/models.py
 from django.db import models
 
-# -------- Terminal Automation --------
+# --- Reusable Block Point Model ---
+class TextBlock(models.Model):
+    text = models.CharField(max_length=500)
 
+    class Meta:
+        abstract = True
+
+# --- Terminal Automation ---
 class AutomationPage(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
@@ -10,25 +17,28 @@ class AutomationPage(models.Model):
     overview_title = models.CharField(max_length=255)
     overview_description = models.TextField()
     benefits_title = models.CharField(max_length=255)
-    benefits = models.JSONField()
     overview_image = models.ImageField(upload_to='infrastructure/automation/')
 
     def __str__(self):
         return "Automation Page"
+
+class AutomationBenefit(TextBlock):
+    page = models.ForeignKey(AutomationPage, related_name="benefits", on_delete=models.CASCADE)
 
 class AutomationSystem(models.Model):
     page = models.ForeignKey(AutomationPage, related_name='systems', on_delete=models.CASCADE)
     system_id = models.CharField(max_length=100)
     title = models.CharField(max_length=255)
     description = models.TextField()
-    features = models.JSONField()
     image = models.ImageField(upload_to='infrastructure/automation/systems/')
 
     def __str__(self):
         return self.title
 
-# -------- Fire Fighting --------
+class AutomationSystemFeature(TextBlock):
+    system = models.ForeignKey(AutomationSystem, related_name="features", on_delete=models.CASCADE)
 
+# --- Fire Fighting ---
 class FirePage(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
@@ -37,22 +47,26 @@ class FirePage(models.Model):
     overview_title = models.CharField(max_length=255)
     overview_text = models.TextField()
     list_title = models.CharField(max_length=255)
-    overview_items = models.JSONField()
     overview_image = models.ImageField(upload_to='infrastructure/fire/')
 
     def __str__(self):
         return "Fire Fighting Page"
+
+class FireOverviewItem(TextBlock):
+    page = models.ForeignKey(FirePage, related_name='overview_items', on_delete=models.CASCADE)
 
 class FireSystem(models.Model):
     page = models.ForeignKey(FirePage, related_name='systems', on_delete=models.CASCADE)
     system_id = models.CharField(max_length=100)
     title = models.CharField(max_length=255)
     description = models.TextField()
-    features = models.JSONField()
     image = models.ImageField(upload_to='infrastructure/fire/systems/')
 
     def __str__(self):
         return self.title
+
+class FireSystemFeature(TextBlock):
+    system = models.ForeignKey(FireSystem, related_name="features", on_delete=models.CASCADE)
 
 class AutoModeStep(models.Model):
     page = models.ForeignKey(FirePage, related_name='auto_mode_steps', on_delete=models.CASCADE)
@@ -70,20 +84,21 @@ class FireTraining(models.Model):
     page = models.OneToOneField(FirePage, related_name='training', on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField()
-    items = models.JSONField()
     image = models.ImageField(upload_to='infrastructure/fire/training/')
 
     def __str__(self):
         return "Fire Training"
 
-# -------- Power Backup --------
+class FireTrainingItem(TextBlock):
+    training = models.ForeignKey(FireTraining, related_name='items', on_delete=models.CASCADE)
 
+# --- Power Backup ---
 class PowerPage(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     intro_title = models.CharField(max_length=255)
     intro_text = models.TextField()
-    critical_systems = models.JSONField()
+    critical_systems = models.TextField()
 
     def __str__(self):
         return "Power Backup Page"
@@ -105,11 +120,13 @@ class PowerDistribution(models.Model):
     title = models.CharField(max_length=255)
     heading = models.CharField(max_length=255)
     text = models.TextField()
-    features = models.JSONField()
     image = models.ImageField(upload_to='infrastructure/power/distribution/')
 
     def __str__(self):
         return "Power Distribution"
+
+class PowerDistributionFeature(TextBlock):
+    distribution = models.ForeignKey(PowerDistribution, related_name='features', on_delete=models.CASCADE)
 
 class PowerMaintenanceStep(models.Model):
     page = models.ForeignKey(PowerPage, related_name='maintenance_steps', on_delete=models.CASCADE)
@@ -123,8 +140,7 @@ class PowerMaintenanceStep(models.Model):
     def __str__(self):
         return f"Step {self.step}: {self.title}"
 
-# -------- Storage --------
-
+# --- Storage ---
 class StoragePage(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
@@ -142,11 +158,13 @@ class StorageTank(models.Model):
     capacity = models.CharField(max_length=255)
     type = models.CharField(max_length=100)
     product = models.CharField(max_length=100)
-    features = models.JSONField()
     image = models.ImageField(upload_to='infrastructure/storage/tanks/')
 
     def __str__(self):
         return self.name
+
+class StorageTankFeature(TextBlock):
+    tank = models.ForeignKey(StorageTank, related_name='features', on_delete=models.CASCADE)
 
 class StorageSafetyBlock(models.Model):
     page = models.ForeignKey(StoragePage, related_name='safety_blocks', on_delete=models.CASCADE)
@@ -156,8 +174,7 @@ class StorageSafetyBlock(models.Model):
     def __str__(self):
         return self.title
 
-# -------- Truck Loading --------
-
+# --- Truck Loading ---
 class TruckLoadingPage(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
@@ -176,7 +193,6 @@ class LoadingBay(models.Model):
     name = models.CharField(max_length=100)
     product_type = models.CharField(max_length=100)
     loading_rate = models.CharField(max_length=100)
-    features = models.JSONField()
 
     def __str__(self):
         return self.name
@@ -196,14 +212,17 @@ class LoadingProcessStep(models.Model):
 class TruckLoadingSafety(models.Model):
     page = models.OneToOneField(TruckLoadingPage, related_name='safety', on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
-    safety_list = models.JSONField()
-    efficiency_list = models.JSONField()
 
     def __str__(self):
         return "Truck Loading Safety"
 
-# -------- Vessel Fleet --------
+class TruckLoadingSafetyPoint(TextBlock):
+    page = models.ForeignKey(TruckLoadingSafety, related_name='safety_points', on_delete=models.CASCADE)
 
+class TruckLoadingEfficiencyPoint(TextBlock):
+    page = models.ForeignKey(TruckLoadingSafety, related_name='efficiency_points', on_delete=models.CASCADE)
+
+# --- Vessel Fleet ---
 class VesselPage(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
@@ -211,11 +230,13 @@ class VesselPage(models.Model):
     intro_text = models.TextField()
     overview_title = models.CharField(max_length=255)
     overview_text = models.TextField()
-    overview_list = models.JSONField()
     overview_image = models.ImageField(upload_to='infrastructure/vessels/')
 
     def __str__(self):
         return "Vessel Fleet Page"
+
+class VesselOverviewItem(TextBlock):
+    page = models.ForeignKey(VesselPage, related_name='overview_items', on_delete=models.CASCADE)
 
 class VesselFeature(models.Model):
     page = models.ForeignKey(VesselPage, related_name='features', on_delete=models.CASCADE)
