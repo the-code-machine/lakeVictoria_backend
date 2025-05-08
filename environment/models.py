@@ -35,9 +35,7 @@ class CarbonFootprintPage(models.Model):
 class OilManagementPage(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
-    intro_title = models.CharField(max_length=255)
-    intro_description = models.TextField()
-    image = models.ImageField(upload_to='environment/carbon/')
+    image = models.ImageField(upload_to='environment/oil/management/')
     volume_shipped = models.PositiveIntegerField(blank=True, null=True) 
 
     def __str__(self):

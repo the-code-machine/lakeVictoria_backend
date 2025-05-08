@@ -1,4 +1,3 @@
-# serializers.py
 from rest_framework import serializers
 from .models import (
     EnvironmentalPage, EnvironmentalInitiative,
@@ -9,7 +8,7 @@ from .models import (
 class EnvironmentalInitiativeSerializer(serializers.ModelSerializer):
     class Meta:
         model = EnvironmentalInitiative
-        fields = ['id', 'title', 'description', 'image', 'link', 'stats']
+        fields = ['id', 'title', 'description', 'image', 'stats']  # Removed 'link'
 
 class EnvironmentalPageSerializer(serializers.ModelSerializer):
     initiatives = EnvironmentalInitiativeSerializer(many=True, read_only=True)
@@ -34,9 +33,9 @@ class OilProcessStepSerializer(serializers.ModelSerializer):
         fields = ['step', 'title', 'description']
 
 class OilManagementPageSerializer(serializers.ModelSerializer):
-    oil_systems = OilSystemSerializer(many=True, read_only=True)
+    systems = OilSystemSerializer(many=True, read_only=True)
     process_steps = OilProcessStepSerializer(many=True, read_only=True)
 
     class Meta:
         model = OilManagementPage
-        fields = ['title', 'description', 'intro_title', 'intro_description', 'image', 'oil_systems', 'process_steps']
+        fields = ['title', 'description', 'image', 'volume_shipped', 'systems', 'process_steps']
