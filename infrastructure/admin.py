@@ -56,6 +56,8 @@ class AutomationSystemInline(nested_admin.NestedStackedInline):
 
 @admin.register(AutomationPage)
 class AutomationPageAdmin(nested_admin.NestedModelAdmin):
+    def has_add_permission(self, request):
+        return not AutomationPage.objects.exists()
     inlines = [AutomationBenefitInline, AutomationSystemInline]
 
 # --- Fire Admin ---
@@ -76,6 +78,8 @@ class AutoModeStepInline(nested_admin.NestedTabularInline):
 
 @admin.register(FirePage)
 class FirePageAdmin(nested_admin.NestedModelAdmin):
+    def has_add_permission(self, request):
+        return not FirePage.objects.exists()
     inlines = [FireOverviewItemInline, FireSystemInline, AutoModeStepInline, FireTrainingInline]
 
 # --- Power Admin ---
@@ -95,6 +99,8 @@ class PowerMaintenanceStepInline(nested_admin.NestedTabularInline):
 
 @admin.register(PowerPage)
 class PowerPageAdmin(nested_admin.NestedModelAdmin):
+    def has_add_permission(self, request):
+        return not PowerPage.objects.exists()
     inlines = [PowerSystemInline, PowerDistributionInline, PowerMaintenanceStepInline]
 
 # --- Storage Admin ---
@@ -109,6 +115,8 @@ class StorageSafetyBlockInline(nested_admin.NestedTabularInline):
 
 @admin.register(StoragePage)
 class StoragePageAdmin(nested_admin.NestedModelAdmin):
+    def has_add_permission(self, request):
+        return not StoragePage.objects.exists()
     inlines = [StorageTankInline, StorageSafetyBlockInline]
 
 # --- Truck Loading Admin ---
@@ -128,6 +136,8 @@ class TruckLoadingSafetyInline(nested_admin.NestedStackedInline):
 
 @admin.register(TruckLoadingPage)
 class TruckLoadingPageAdmin(nested_admin.NestedModelAdmin):
+    def has_add_permission(self, request):
+        return not TruckLoadingPage.objects.exists()
     inlines = [LoadingBayInline, LoadingProcessStepInline, TruckLoadingSafetyInline]
 
 # --- Vessel Admin ---
@@ -147,4 +157,6 @@ class VesselCrewInline(nested_admin.NestedStackedInline):
 
 @admin.register(VesselPage)
 class VesselPageAdmin(nested_admin.NestedModelAdmin):
+    def has_add_permission(self, request):
+        return not VesselPage.objects.exists()
     inlines = [VesselOverviewItemInline, VesselFeatureInline, VesselSpecInline, VesselCrewInline]
