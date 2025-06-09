@@ -27,7 +27,10 @@ class CarbonFootprintPage(models.Model):
     intro_title = models.CharField(max_length=255)
     intro_description = models.TextField()
     image = models.ImageField(upload_to='environment/carbon/')
-    volume_shipped = models.PositiveIntegerField()
+    volume_shipped_bik = models.PositiveIntegerField(blank=True, null=True) 
+    volume_shipped_pms = models.PositiveIntegerField(blank=True, null=True) 
+    volume_shipped_ago = models.PositiveIntegerField(blank=True, null=True) 
+    volume_shipped_jet_a_1 = models.PositiveIntegerField(blank=True, null=True) 
 
     def __str__(self):
         return "Carbon Footprint Page"
@@ -36,7 +39,7 @@ class OilManagementPage(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     image = models.ImageField(upload_to='environment/oil/management/')
-    volume_shipped = models.PositiveIntegerField(blank=True, null=True) 
+    volume_shipped = models.PositiveIntegerField(blank=True, null=True)
 
     def __str__(self):
         return "Oil Management Page"

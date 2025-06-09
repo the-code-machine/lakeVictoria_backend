@@ -20,7 +20,7 @@ class EnvironmentalPageSerializer(serializers.ModelSerializer):
 class CarbonFootprintPageSerializer(serializers.ModelSerializer):
     class Meta:
         model = CarbonFootprintPage
-        fields = ['title', 'description', 'intro_title', 'intro_description', 'image', 'volume_shipped']
+        fields = ['title', 'description', 'intro_title', 'intro_description', 'image', 'volume_shipped_bik','volume_shipped_pms', 'volume_shipped_ago', 'volume_shipped_jet_a_1']
 
 class OilSystemSerializer(serializers.ModelSerializer):
     class Meta:
@@ -38,4 +38,4 @@ class OilManagementPageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OilManagementPage
-        fields = ['title', 'description', 'image', 'volume_shipped', 'systems', 'process_steps']
+        fields = ['title', 'description', 'image',  'systems', 'process_steps', 'volume_shipped']
