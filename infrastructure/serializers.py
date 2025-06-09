@@ -187,7 +187,13 @@ class TruckLoadingPageSerializer(serializers.ModelSerializer):
         fields = ['title', 'description', 'intro_title', 'config_note', 'average_rate',
                   'truck_count', 'intro_image', 'bays', 'process_steps', 'safety']
 
-# -------- Vessel Fleet --------
+# -------- Updated Vessel Fleet Serializers --------
+
+class VesselImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VesselImage
+        fields = ['image', 'caption']
+
 class VesselFeatureSerializer(serializers.ModelSerializer):
     class Meta:
         model = VesselFeature
@@ -210,14 +216,28 @@ class VesselCrewSerializer(serializers.ModelSerializer):
         model = VesselCrew
         fields = ['title', 'summary', 'stats']
 
-class VesselPageSerializer(serializers.ModelSerializer):
-    overview_items = VesselOverviewItemSerializer(many=True, read_only=True)
+class IndividualVesselSerializer(serializers.ModelSerializer):
+    """Serializer for individual vessel details"""
+    additional_images = VesselImageSerializer(many=True, read_only=True)
     features = VesselFeatureSerializer(many=True, read_only=True)
     specs = VesselSpecSerializer(many=True, read_only=True)
-    crew = VesselCrewSerializer(read_only=True)
+    crew_info = VesselCrewSerializer(read_only=True)
 
     class Meta:
-        model = VesselPage
-        fields = ['title', 'description', 'intro_title', 'intro_text',
-                  'overview_title', 'overview_text', 'overview_items', 'overview_image',
-                  'features', 'specs', 'crew']
+        model = IndividualVessel
+        fields = ['id', 'name', 'description', 'main_image', 'additional_images', 
+                  'features', 'specs', 'crew_info']
+
+class VesselSummarySerializer(serializers.ModelSerializer):
+    """Simplified serializer for vessel list view"""
+    class Meta:
+        model = IndividualVessel
+        fields = ['id', 'name', 'description', 'main_image']
+
+class VesselFleetPageSerializer(serializers.ModelSerializer):
+    """Serializer for the main fleet page with vessel summaries"""
+    vessels = VesselSummarySerializer(many=True, read_only=True)
+
+    class Meta:
+        model = VesselFleetPage
+        fields = ['title', 'description', 'intro_title', 'intro_text', 'vessels']

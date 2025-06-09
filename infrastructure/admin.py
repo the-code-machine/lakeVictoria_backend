@@ -140,23 +140,55 @@ class TruckLoadingPageAdmin(nested_admin.NestedModelAdmin):
         return not TruckLoadingPage.objects.exists()
     inlines = [LoadingBayInline, LoadingProcessStepInline, TruckLoadingSafetyInline]
 
-# --- Vessel Admin ---
+# --- Updated Vessel Admin Configuration ---
+
+class VesselImageInline(nested_admin.NestedTabularInline):
+    model = VesselImage
+    extra = 1
+    fields = ['image', 'caption', 'order']
+
 class VesselFeatureInline(nested_admin.NestedTabularInline):
     model = VesselFeature
     extra = 1
+    fields = ['feature_id', 'title', 'description', 'order']
 
 class VesselSpecInline(nested_admin.NestedTabularInline):
     model = VesselSpec
     extra = 1
+    fields = ['label', 'value', 'type', 'order']
+
+class VesselCrewStatInline(nested_admin.NestedTabularInline):
+    model = VesselCrewStat
+    extra = 1
+    fields = ['label', 'desc', 'order']
 
 class VesselCrewInline(nested_admin.NestedStackedInline):
     model = VesselCrew
     inlines = [VesselCrewStatInline]
     max_num = 1
     can_delete = False
+    fields = ['title', 'summary']
 
-@admin.register(VesselPage)
-class VesselPageAdmin(nested_admin.NestedModelAdmin):
+class IndividualVesselInline(nested_admin.NestedStackedInline):
+    model = IndividualVessel
+    inlines = [VesselImageInline, VesselFeatureInline, VesselSpecInline, VesselCrewInline]
+    extra = 0
+    fields = ['name', 'description', 'main_image', 'is_active', 'order']
+
+@admin.register(VesselFleetPage)
+class VesselFleetPageAdmin(nested_admin.NestedModelAdmin):
     def has_add_permission(self, request):
-        return not VesselPage.objects.exists()
-    inlines = [VesselOverviewItemInline, VesselFeatureInline, VesselSpecInline, VesselCrewInline]
+        return not VesselFleetPage.objects.exists()
+    
+    inlines = [IndividualVesselInline]
+    fields = ['title', 'description', 'intro_title', 'intro_text']
+
+@admin.register(IndividualVessel)
+class IndividualVesselAdmin(nested_admin.NestedModelAdmin):
+    list_display = ['name', 'fleet_page', 'is_active', 'order']
+    list_filter = ['is_active', 'fleet_page']
+    list_editable = ['is_active', 'order']
+    search_fields = ['name', 'description']
+    
+    inlines = [VesselImageInline, VesselFeatureInline, VesselSpecInline, VesselCrewInline]
+    fields = ['fleet_page', 'name', 'description', 'main_image', 'is_active', 'order']
