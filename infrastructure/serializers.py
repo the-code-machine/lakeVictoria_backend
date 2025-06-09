@@ -53,10 +53,6 @@ class TruckLoadingEfficiencyPointSerializer(serializers.ModelSerializer):
         model = TruckLoadingEfficiencyPoint
         fields = ['text']
 
-class VesselOverviewItemSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = VesselOverviewItem
-        fields = ['text']
 
 # -------- Automation --------
 class AutomationSystemSerializer(serializers.ModelSerializer):
