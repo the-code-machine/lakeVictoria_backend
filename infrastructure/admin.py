@@ -40,13 +40,6 @@ class TruckLoadingEfficiencyPointInline(nested_admin.NestedTabularInline):
     model = TruckLoadingEfficiencyPoint
     extra = 1
 
-class VesselOverviewItemInline(nested_admin.NestedTabularInline):
-    model = VesselOverviewItem
-    extra = 1
-
-class VesselCrewStatInline(nested_admin.NestedTabularInline):
-    model = VesselCrewStat
-    extra = 1
 
 # --- Automation Admin ---
 class AutomationSystemInline(nested_admin.NestedStackedInline):
