@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-5t-rowu_ta5ekk%_-37jz)j3_%k^6&#rx0zml49f4+oaalb!5b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['51.20.98.208', 'localhost', '127.0.0.1','api.caplock.in','13.201.135.42']
+ALLOWED_HOSTS = ['51.20.98.208', 'localhost', '127.0.0.1','api.lakevictorialogistics.com','13.201.135.42']
 
 
 # Application definition
